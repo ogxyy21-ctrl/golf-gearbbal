@@ -350,6 +350,256 @@
       color: #64748b;
       line-height: 1.8;
     }
+  
+    /* Main Country Switcher Tabs */
+    .country-tabs-wrap {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: rgba(14, 20, 28, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .country-tab-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 16px;
+      border-radius: 13px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .country-tab-btn.active {
+      background: linear-gradient(135deg, rgba(223, 186, 85, 0.16) 0%, rgba(16, 185, 129, 0.16) 100%);
+      color: #ffffff;
+      border-color: rgba(223, 186, 85, 0.35);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .country-tab-btn .tab-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--gold);
+    }
+    .country-tab-btn.active .tab-badge {
+      background: rgba(223, 186, 85, 0.25);
+      color: #fff;
+    }
+
+    /* Interactive Map Card */
+    .map-card {
+      background: linear-gradient(180deg, rgba(16, 23, 31, 0.85) 0%, rgba(10, 15, 20, 0.95) 100%);
+      border: 1px solid rgba(223, 186, 85, 0.25);
+      border-radius: 20px;
+      padding: 22px 18px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+    .map-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .map-card-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .map-card-sub {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .map-interactive-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    @media (min-width: 680px) {
+      .map-interactive-container {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+    .map-svg-wrap {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      background: radial-gradient(circle at 50% 50%, rgba(20, 45, 35, 0.5) 0%, rgba(8, 12, 16, 0.8) 75%);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 10px;
+      box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+    .korea-map-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .map-region-shape {
+      fill: #141f29;
+      stroke: rgba(223, 186, 85, 0.3);
+      stroke-width: 1.2;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .map-region-shape:hover, .map-region-shape.active {
+      fill: #1b2d30;
+      stroke: var(--gold);
+      stroke-width: 2;
+      filter: drop-shadow(0 0 8px rgba(223, 186, 85, 0.4));
+    }
+    .map-pin {
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .map-pin:hover {
+      transform: scale(1.22);
+    }
+    .pin-circle {
+      fill: var(--gold);
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
+    }
+    .pin-pulse {
+      animation: pinPulse 2s infinite ease-out;
+      transform-origin: center;
+    }
+    @keyframes pinPulse {
+      0% { r: 7; opacity: 0.8; }
+      100% { r: 18; opacity: 0; }
+    }
+    .pin-label {
+      font-size: 11px;
+      font-weight: 800;
+      fill: #ffffff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 4px #000;
+      pointer-events: none;
+    }
+
+    /* Map Region Quick Chips */
+    .map-chips-wrap {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .chips-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .chips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 7px;
+    }
+    .region-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      color: #e2e8f0;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+    .region-chip:hover {
+      background: rgba(223, 186, 85, 0.14);
+      border-color: var(--gold);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .region-chip .chip-count {
+      font-size: 11px;
+      color: var(--gold);
+      background: rgba(223, 186, 85, 0.12);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
+    /* Japan Golf Section */
+    #sectionJapan {
+      display: none;
+    }
+    .jp-hero {
+      background: linear-gradient(135deg, rgba(20, 32, 25, 0.8) 0%, rgba(13, 20, 30, 0.8) 100%);
+      border: 1px solid rgba(223, 186, 85, 0.3);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .jp-hero-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .jp-hero-sub {
+      font-size: 13.5px;
+      color: var(--text-sub);
+    }
+    .jp-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    .jp-tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background: rgba(223, 186, 85, 0.1);
+      border: 1px solid rgba(223, 186, 85, 0.25);
+      color: var(--gold-light);
+    }
+    .course-meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .course-meta-tag.highlight {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .course-meta-tag.gold {
+      background: rgba(223, 186, 85, 0.15);
+      color: var(--gold-light);
+      border-color: rgba(223, 186, 85, 0.3);
+    }
+
   </style>
 </head>
 <body>
@@ -364,6 +614,171 @@
         <span>공략 영상 <b>197</b>편</span>
       </div>
     </header>
+
+    <div class="country-tabs-wrap">
+      <button class="country-tab-btn active" id="tabBtnKr" onclick="switchCountryTab('kr')">
+        <span>🇰🇷 대한민국 골프장</span>
+        <span class="tab-badge">124곳</span>
+      </button>
+      <button class="country-tab-btn" id="tabBtnJp" onclick="switchCountryTab('jp')">
+        <span>🇯🇵 일본 골프장</span>
+        <span class="tab-badge">오사카 · 미야자키</span>
+      </button>
+    </div>
+
+
+    
+    <div class="map-card" id="koreaMapCard">
+      <div class="map-card-header">
+        <div class="map-card-title">
+          <span>🗺️ 대한민국 골프장 지도 뷰</span>
+        </div>
+        <div class="map-card-sub">지도의 핀이나 지역을 누르면 해당 코스로 직행합니다</div>
+      </div>
+      <div class="map-interactive-container">
+        <!-- SVG Map of Korea -->
+        <div class="map-svg-wrap">
+          <svg class="korea-map-svg" viewBox="0 0 460 560" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="landGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#15202b"/>
+                <stop offset="100%" stop-color="#0e171f"/>
+              </linearGradient>
+              <linearGradient id="goldPinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fef08a"/>
+                <stop offset="100%" stop-color="#dfba55"/>
+              </linearGradient>
+            </defs>
+            
+            <!-- Simplified Aesthetic Korea Land Boundaries -->
+            <!-- North border line hint -->
+            <path d="M 120 40 Q 220 30 350 45" fill="none" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4 4"/>
+            
+            <!-- Gyeonggi & Incheon & Seoul -->
+            <path class="map-region-shape" id="shape-gwanggyo" onclick="scrollToRegion('gwanggyo')"
+                  d="M 130 50 L 200 48 L 220 90 L 210 170 L 150 175 L 125 140 L 110 90 Z"/>
+            
+            <!-- Gangwon -->
+            <path class="map-region-shape" id="shape-gangwon" onclick="scrollToRegion('gangwon')"
+                  d="M 200 48 L 360 55 L 340 180 L 250 190 L 210 170 L 220 90 Z"/>
+            
+            <!-- Chungcheong -->
+            <path class="map-region-shape" id="shape-chungcheong" onclick="scrollToRegion('chungcheong')"
+                  d="M 150 175 L 250 190 L 270 270 L 170 280 L 120 220 Z"/>
+            
+            <!-- Gyeongsang (Daegu/Busan/Gimhae) -->
+            <path class="map-region-shape" id="shape-gyeongsang" onclick="scrollToRegion('gyeongsang')"
+                  d="M 250 190 L 340 180 L 370 290 L 330 390 L 260 380 L 270 270 Z"/>
+            
+            <!-- Jeolla -->
+            <path class="map-region-shape" id="shape-jeolla" onclick="scrollToRegion('jeolla')"
+                  d="M 120 220 L 170 280 L 260 380 L 210 430 L 110 420 L 105 300 Z"/>
+            
+            <!-- Jeju Island -->
+            <path class="map-region-shape" id="shape-jeju" onclick="scrollToRegion('jeju')"
+                  d="M 100 500 Q 145 490 190 505 Q 185 530 140 535 Q 95 525 100 500 Z"/>
+            
+            <!-- Ulleungdo & Dokdo -->
+            <circle cx="395" cy="140" r="7" fill="#1b2d30" stroke="rgba(223, 186, 85, 0.3)"/>
+            <circle cx="420" cy="150" r="4" fill="#1b2d30" stroke="rgba(223, 186, 85, 0.3)"/>
+
+            <!-- Region Markers & Badges -->
+            <!-- 1. Gwanggyo & Yongin & Suwon (User Focus Star Pin) -->
+            <g class="map-pin" onclick="scrollToRegion('gwanggyo')">
+              <circle class="pin-pulse" cx="165" cy="135" r="12" fill="none" stroke="#dfba55" stroke-width="2"/>
+              <circle cx="165" cy="135" r="10" fill="url(#goldPinGrad)"/>
+              <text x="165" y="139" text-anchor="middle" font-size="9" font-weight="900" fill="#070a0d">★</text>
+              <text class="pin-label" x="165" y="157" text-anchor="middle">광교·용인 (12)</text>
+            </g>
+
+            <!-- 2. Gyeonggi South -->
+            <g class="map-pin" onclick="scrollToRegion('gyeonggi_south')">
+              <circle cx="185" cy="175" r="8" fill="#10b981"/>
+              <text class="pin-label" x="185" y="195" text-anchor="middle">경기남부 (20)</text>
+            </g>
+
+            <!-- 3. Gyeonggi North / Incheon -->
+            <g class="map-pin" onclick="scrollToRegion('gyeonggi_north')">
+              <circle cx="145" cy="90" r="8" fill="#38bdf8"/>
+              <text class="pin-label" x="145" y="80" text-anchor="middle">경기북부 (12)</text>
+            </g>
+
+            <!-- 4. Gangwon -->
+            <g class="map-pin" onclick="scrollToRegion('gangwon')">
+              <circle cx="280" cy="115" r="8" fill="#a855f7"/>
+              <text class="pin-label" x="280" y="135" text-anchor="middle">강원 (12)</text>
+            </g>
+
+            <!-- 5. Chungcheong -->
+            <g class="map-pin" onclick="scrollToRegion('chungcheong')">
+              <circle cx="195" cy="240" r="8" fill="#f59e0b"/>
+              <text class="pin-label" x="195" y="260" text-anchor="middle">충청·세종 (9)</text>
+            </g>
+
+            <!-- 6. Gyeongsang / Busan / Gimhae -->
+            <g class="map-pin" onclick="scrollToRegion('gyeongsang')">
+              <circle cx="310" cy="300" r="9" fill="#06b6d4"/>
+              <text class="pin-label" x="310" y="320" text-anchor="middle">경상·부산 (13)</text>
+            </g>
+
+            <!-- 7. Jeolla -->
+            <g class="map-pin" onclick="scrollToRegion('jeolla')">
+              <circle cx="160" cy="350" r="8" fill="#ec4899"/>
+              <text class="pin-label" x="160" y="370" text-anchor="middle">전라 (5)</text>
+            </g>
+
+            <!-- 8. Jeju -->
+            <g class="map-pin" onclick="scrollToRegion('jeju')">
+              <circle cx="145" cy="515" r="8" fill="#fb923c"/>
+              <text class="pin-label" x="145" y="542" text-anchor="middle">제주 (5)</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Right / Bottom Quick Chips -->
+        <div class="map-chips-wrap">
+          <div class="chips-title">⚡️ 지역별 코스 바로가기 (탭하면 즉시 이동)</div>
+          <div class="chips-grid">
+            <button class="region-chip" onclick="scrollToRegion('gwanggyo')">
+              <span>⭐️ 광교·용인</span>
+              <span class="chip-count">12곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('gyeonggi_south')">
+              <span>📍 경기 남부</span>
+              <span class="chip-count">20곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('gyeonggi_north')">
+              <span>🌲 경기 북부</span>
+              <span class="chip-count">12곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('gangwon')">
+              <span>⛰️ 강원권</span>
+              <span class="chip-count">12곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('chungcheong')">
+              <span>🏛️ 충청·세종</span>
+              <span class="chip-count">9곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('gyeongsang')">
+              <span>🌊 경상·부산·김해</span>
+              <span class="chip-count">13곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('jeolla')">
+              <span>🌾 전라권</span>
+              <span class="chip-count">5곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('jeju')">
+              <span>🍊 제주권</span>
+              <span class="chip-count">5곳</span>
+            </button>
+            <button class="region-chip" onclick="scrollToRegion('etc')">
+              <span>⛳️ 기타 지역</span>
+              <span class="chip-count">36곳</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="toolbar">
       <div class="search-wrap">
@@ -577,7 +992,7 @@
           <div class="region-title-wrap">
             <span class="region-icon">📍</span>
             <span class="region-name">경기 남부 (이천 · 여주 · 안성 · 양평)</span>
-            <span class="region-badge">21곳</span>
+            <span class="region-badge">20곳</span>
           </div>
           <span class="arrow-icon">▼</span>
         </summary>
@@ -879,18 +1294,6 @@
               <a href="https://www.youtube.com/watch?v=yvFXLxgheFY" target="_blank" class="vid-btn">
                 <span class="play-symbol">▶</span>
                 <span>CC 동코스</span>
-              </a>
-            </div>
-          </div>
-          <div class="course-item" data-cname="포웰cc">
-            <div class="course-item-header">
-              <span class="course-name">포웰CC</span>
-              <a href="https://www.youtube.com/results?search_query=맵가이더+포웰CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
-            </div>
-            <div class="video-btns">
-              <a href="https://www.youtube.com/watch?v=J4GGtBTuvE8" target="_blank" class="vid-btn">
-                <span class="play-symbol">▶</span>
-                <span>김해 스카이코스</span>
               </a>
             </div>
           </div>
@@ -1444,8 +1847,8 @@
         <summary class="region-header">
           <div class="region-title-wrap">
             <span class="region-icon">🌊</span>
-            <span class="region-name">경상 / 부산권 (부산 · 양산 · 대구 · 의성 등)</span>
-            <span class="region-badge">12곳</span>
+            <span class="region-name">경상 / 부산권 (부산 · 김해 · 양산 · 대구 · 의성 등)</span>
+            <span class="region-badge">13곳</span>
           </div>
           <span class="arrow-icon">▼</span>
         </summary>
@@ -1611,6 +2014,18 @@
               <a href="https://www.youtube.com/watch?v=Vttp3XqFAcw" target="_blank" class="vid-btn">
                 <span class="play-symbol">▶</span>
                 <span>포도 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="포웰cc김해 포웰cc">
+            <div class="course-item-header">
+              <span class="course-name">포웰CC 김해</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+포웰CC+김해" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=J4GGtBTuvE8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>스카이코스</span>
               </a>
             </div>
           </div>
@@ -2270,6 +2685,238 @@
       </details>
     </div>
 
+    
+    <!-- JAPAN GOLF SECTION -->
+    <div id="sectionJapan" class="country-section">
+      <div class="jp-hero">
+        <div class="badge">Japan Golf Course Guide</div>
+        <div class="jp-hero-title">🇯🇵 일본 골프 여행 코스 가이드</div>
+        <div class="jp-hero-sub">원장님의 12월 크리스마스 여행지(오사카 간사이) 및 한국 골퍼 선호 명문 코스</div>
+        <div class="jp-tags-row">
+          <span class="jp-tag">✈️ 간사이 에어포트권</span>
+          <span class="jp-tag">♨️ 온천 & 리조트 골프</span>
+          <span class="jp-tag">🌙 야간 조명 라운드</span>
+          <span class="jp-tag">🌴 미야자키 피닉스</span>
+        </div>
+      </div>
+
+      <div class="region-list">
+        <!-- Kansai / Osaka 5 Courses -->
+        <details class="region-card" open data-jp-region="osaka">
+          <summary class="region-header">
+            <div class="region-title-wrap">
+              <span class="region-icon">🏯</span>
+              <span class="region-name">오사카 / 간사이 스타게이트 5색 골프장</span>
+              <span class="region-badge">5곳</span>
+            </div>
+            <span class="arrow-icon">▼</span>
+          </summary>
+          <div class="courses-container">
+            <!-- 1. Kansai Airport CC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">간사이공항 골프클럽 (Kansai Airport CC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag highlight">⭐️ PGM 평점 1위</span>
+                    <span class="course-meta-tag gold">🌊 오사카만 오션뷰</span>
+                    <span class="course-meta-tag">부부·비기너 강력추천</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=간사이공항CC+골프" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                간사이 국제공항과 바다가 한눈에 내려다보이는 특급 명문 구장. 업다운이 완만하고 페어웨이가 넓어 부부동반 라운드 만족도 최상위 코스입니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=간사이공항CC+코스공략" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>코스 공략 및 라운드 영상 보기</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 2. Sakai CC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">사카이 컨트리클럽 (Sakai CC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag highlight">🌙 야간 조명 완비</span>
+                    <span class="course-meta-tag gold">27홀 평지형</span>
+                    <span class="course-meta-tag">입국 첫날 13시 티오프 최적</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=사카이CC+골프" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                간사이 5색 골프장 중 유일하게 최신 고출력 야간 라이트 시설을 갖춘 평지형 구장. 12월 16:50 일몰에도 마지막 홀까지 안심하고 플레이 가능합니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=사카이CC+라운딩" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>사카이CC 실전 라운드 영상</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3. Misaki CC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">미사키 컨트리클럽 (Misaki CC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag highlight">88m 광활한 페어웨이</span>
+                    <span class="course-meta-tag gold">🌊 세토내해 오션뷰</span>
+                    <span class="course-meta-tag">OB 부담 제로 힐링</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=미사키CC+골프" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                세토내해 바다를 바라보며 티샷을 날릴 수 있는 리조트형 구장. 최대 88m에 달하는 광활한 페어웨이로 드라이버 슬라이스나 OB 부담 없이 호쾌하게 공을 칠 수 있습니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=미사키CC+코스" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>미사키CC 코스 영상</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 4. Izumisano CC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">이즈미사노 컨트리클럽 (Izumisano CC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag">웅장한 27홀 챔피언십</span>
+                    <span class="course-meta-tag">전략적 레이아웃</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=이즈미사노CC+골프" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                이누나키 산자락의 자연 지형을 살린 웅장한 코스. 연못과 벙커가 곳곳에 배치되어 정확한 아이언 샷과 전략적 공략의 묘미를 느낄 수 있습니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=이즈미사노CC" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>이즈미사노CC 코스 보기</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 5. Kishiwada CC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">기시와다 컨트리클럽 (Kishiwada CC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag">산악 구릉지형</span>
+                    <span class="course-meta-tag">카트 리프트 시설</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=기시와다CC+골프" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                경사도와 고저차가 다이내믹한 산악 코스로 카트 이동용 리프트가 설치되어 있습니다. 난이도가 높아 초보자보다는 도전적인 골퍼에게 어울립니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=기시와다CC" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>기시와다CC 코스 보기</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Miyazaki Courses -->
+        <details class="region-card" data-jp-region="miyazaki">
+          <summary class="region-header">
+            <div class="region-title-wrap">
+              <span class="region-icon">🌴</span>
+              <span class="region-name">미야자키 명문 골프 리조트</span>
+              <span class="region-badge">3곳</span>
+            </div>
+            <span class="arrow-icon">▼</span>
+          </summary>
+          <div class="courses-container">
+            <!-- 1. Aiwa Miyazaki -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">아이와 미야자키 골프클럽 (Aiwa Miyazaki GC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag gold">🏨 리조트 일체형 골프</span>
+                    <span class="course-meta-tag highlight">흑송림 & 야자수 조경</span>
+                    <span class="course-meta-tag">한국 골퍼 만족도 1위</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=아이와+미야자키+골프" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                세계적인 건축가 쿠로카와 키쇼가 설계한 아름다운 호텔과 코스가 결합된 최고급 골프 리조트. 겨울철에도 포근한 남국 기후에서 온천과 라운드를 동시에 즐길 수 있습니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=아이와+미야자키+골프클럽+코스" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>아이와CC 코스 영상 보기</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 2. Phoenix CC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">피닉스 컨트리클럽 (Phoenix Country Club)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag highlight">🏆 던롭 피닉스 토너먼트 개최지</span>
+                    <span class="course-meta-tag gold">세계 100대 코스</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=피닉스CC+미야자키" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                타이거 우즈 등 전 세계 레전드 골퍼들이 격돌했던 아시아 최고의 토너먼트 코스. 웅장한 해송림 사이로 완벽하게 관리된 최고급 페어웨이를 자랑합니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=피닉스CC+미야자키+라운드" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>피닉스CC 라운드 영상</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3. Tom Watson GC -->
+            <div class="course-item">
+              <div class="course-item-header">
+                <div>
+                  <span class="course-name">톰 왓슨 골프 코스 (Tom Watson GC)</span>
+                  <div style="margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap;">
+                    <span class="course-meta-tag">PGA 전설 톰 왓슨 설계</span>
+                    <span class="course-meta-tag">정교한 샷 가치</span>
+                  </div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=톰왓슨GC+미야자키" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+              </div>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                피닉스 리조트 내 위치한 전략형 코스로 소나무 숲길 사이로 펼쳐지는 정교한 클럽 선택과 코스 매니지먼트의 즐거움을 선사합니다.
+              </p>
+              <div class="video-btns">
+                <a href="https://www.youtube.com/results?search_query=톰왓슨+골프코스" target="_blank" class="vid-btn">
+                  <span class="play-symbol">▶</span>
+                  <span>톰 왓슨 코스 영상</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
     <div id="emptyNotice" class="empty-result">
       🔍 검색 결과에 일치하는 골프장이 없습니다.
     </div>
@@ -2337,6 +2984,50 @@
     } catch (e) {
       console.log('Script execution note:', e);
     }
+  
+    // Country Tab Switching
+    function switchCountryTab(country) {
+      const btnKr = document.getElementById('tabBtnKr');
+      const btnJp = document.getElementById('tabBtnJp');
+      const koreaMap = document.getElementById('koreaMapCard');
+      const toolbar = document.querySelector('.toolbar');
+      const regionList = document.getElementById('regionList');
+      const sectionJapan = document.getElementById('sectionJapan');
+
+      if (country === 'kr') {
+        btnKr.classList.add('active');
+        btnJp.classList.remove('active');
+        if (koreaMap) koreaMap.style.display = 'block';
+        if (toolbar) toolbar.style.display = 'flex';
+        if (regionList) regionList.style.display = 'flex';
+        if (sectionJapan) sectionJapan.style.display = 'none';
+      } else {
+        btnJp.classList.add('active');
+        btnKr.classList.remove('active');
+        if (koreaMap) koreaMap.style.display = 'none';
+        if (toolbar) toolbar.style.display = 'none';
+        if (regionList) regionList.style.display = 'none';
+        if (sectionJapan) sectionJapan.style.display = 'block';
+      }
+    }
+
+    // Smooth Scroll to Region from Map Pin or Chip
+    function scrollToRegion(regionId) {
+      const targetCard = document.querySelector(`details.region-card[data-region="${regionId}"]`);
+      if (targetCard) {
+        targetCard.open = true;
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Pulse effect on card
+        targetCard.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
+        targetCard.style.borderColor = '#dfba55';
+        targetCard.style.boxShadow = '0 0 25px rgba(223, 186, 85, 0.4)';
+        setTimeout(() => {
+          targetCard.style.borderColor = '';
+          targetCard.style.boxShadow = '';
+        }, 1500);
+      }
+    }
+
   </script>
 </body>
 </html>
