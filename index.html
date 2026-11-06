@@ -4150,6 +4150,7 @@
     function onJpRegionShapeClick(prefId) {
       const mapping = {
         'osaka': 'osaka_city', 'hyogo': 'osaka_city', 'kyoto': 'osaka_city', 'nara': 'osaka_city',
+        'wakayama': 'osaka_city',
         'hokkaido': 'jp_01_hokkaido',
         'nagano': 'jp_02_karuizawa', 'gunma': 'jp_02_karuizawa',
         'ibaraki': 'jp_03_ibaraki', 'chiba': 'jp_03_ibaraki', 'tochigi': 'jp_03_ibaraki',
@@ -4163,11 +4164,6 @@
       };
       const target = mapping[prefId] || 'osaka_city';
       scrollToJpRegion(target);
-    } else if (['wakayama'].includes(prefId)) {
-        scrollToJpRegion('kansai_extra');
-      } else if (['miyazaki', 'kagoshima', 'kumamoto', 'fukuoka', 'oita'].includes(prefId)) {
-        scrollToJpRegion('miyazaki');
-      }
     }
 
     function scrollToJpRegion(jpRegionId) {
