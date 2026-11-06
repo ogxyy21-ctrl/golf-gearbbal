@@ -454,6 +454,46 @@
       color: #fff;
     }
 
+    /* Native CSS Tab Support (100% Guaranteed switch even without JS) */
+    .country-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #tabRadioKr:checked ~ .country-tabs-wrap #tabBtnKr,
+    .country-tab-btn.active#tabBtnKr {
+      background: linear-gradient(135deg, rgba(223, 186, 85, 0.16) 0%, rgba(16, 185, 129, 0.16) 100%);
+      color: #ffffff;
+      border-color: rgba(223, 186, 85, 0.35);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    #tabRadioKr:checked ~ .country-tabs-wrap #tabBtnKr .tab-badge,
+    .country-tab-btn.active#tabBtnKr .tab-badge {
+      background: rgba(223, 186, 85, 0.25);
+      color: #fff;
+    }
+    #tabRadioJp:checked ~ .country-tabs-wrap #tabBtnJp,
+    .country-tab-btn.active#tabBtnJp {
+      background: linear-gradient(135deg, rgba(223, 186, 85, 0.16) 0%, rgba(16, 185, 129, 0.16) 100%);
+      color: #ffffff;
+      border-color: rgba(223, 186, 85, 0.35);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    #tabRadioJp:checked ~ .country-tabs-wrap #tabBtnJp .tab-badge,
+    .country-tab-btn.active#tabBtnJp .tab-badge {
+      background: rgba(223, 186, 85, 0.25);
+      color: #fff;
+    }
+    #tabRadioKr:checked ~ #koreaMapCard { display: block !important; }
+    #tabRadioKr:checked ~ .toolbar { display: flex !important; }
+    #tabRadioKr:checked ~ #regionList { display: flex !important; }
+    #tabRadioKr:checked ~ #sectionJapan { display: none !important; }
+
+    #tabRadioJp:checked ~ #koreaMapCard { display: none !important; }
+    #tabRadioJp:checked ~ .toolbar { display: none !important; }
+    #tabRadioJp:checked ~ #regionList { display: none !important; }
+    #tabRadioJp:checked ~ #sectionJapan { display: block !important; }
+
     /* Interactive Map Card */
     .map-card {
       background: linear-gradient(180deg, rgba(16, 23, 31, 0.85) 0%, rgba(10, 15, 20, 0.95) 100%);
@@ -712,15 +752,19 @@
       </div>
     </header>
 
+    <!-- Native Radio Controls for 100% Reliable Tab Switching -->
+    <input type="radio" id="tabRadioKr" name="countryTab" checked class="country-radio" onchange="switchCountryTab('kr')">
+    <input type="radio" id="tabRadioJp" name="countryTab" class="country-radio" onchange="switchCountryTab('jp')">
+
     <div class="country-tabs-wrap">
-      <button class="country-tab-btn active" id="tabBtnKr" onclick="switchCountryTab('kr')">
+      <label for="tabRadioKr" class="country-tab-btn active" id="tabBtnKr" onclick="switchCountryTab('kr')">
         <span>🇰🇷 대한민국 골프장</span>
         <span class="tab-badge">124곳</span>
-      </button>
-      <button class="country-tab-btn" id="tabBtnJp" onclick="switchCountryTab('jp')">
+      </label>
+      <label for="tabRadioJp" class="country-tab-btn" id="tabBtnJp" onclick="switchCountryTab('jp')">
         <span>🇯🇵 일본 골프장</span>
         <span class="tab-badge">오사카 · 미야자키</span>
-      </button>
+      </label>
     </div>
 
 
@@ -4178,6 +4222,8 @@
   
     // Country Tab Switching
     function switchCountryTab(country) {
+      const radioKr = document.getElementById('tabRadioKr');
+      const radioJp = document.getElementById('tabRadioJp');
       const btnKr = document.getElementById('tabBtnKr');
       const btnJp = document.getElementById('tabBtnJp');
       const koreaMap = document.getElementById('koreaMapCard');
@@ -4186,15 +4232,17 @@
       const sectionJapan = document.getElementById('sectionJapan');
 
       if (country === 'kr') {
-        btnKr.classList.add('active');
-        btnJp.classList.remove('active');
+        if (radioKr) radioKr.checked = true;
+        if (btnKr) btnKr.classList.add('active');
+        if (btnJp) btnJp.classList.remove('active');
         if (koreaMap) koreaMap.style.display = 'block';
         if (toolbar) toolbar.style.display = 'flex';
         if (regionList) regionList.style.display = 'flex';
         if (sectionJapan) sectionJapan.style.display = 'none';
       } else {
-        btnJp.classList.add('active');
-        btnKr.classList.remove('active');
+        if (radioJp) radioJp.checked = true;
+        if (btnJp) btnJp.classList.add('active');
+        if (btnKr) btnKr.classList.remove('active');
         if (koreaMap) koreaMap.style.display = 'none';
         if (toolbar) toolbar.style.display = 'none';
         if (regionList) regionList.style.display = 'none';
