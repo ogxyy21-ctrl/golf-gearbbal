@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>맵가이더 골프장 코스 공략 가이드</title>
+  <style>
+    :root {
+      --bg: #070a0d;
+      --card-bg: #0f151c;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(223, 186, 85, 0.45);
+      --header-bg: linear-gradient(135deg, #131d17 0%, #10161d 100%);
+      --header-hover: linear-gradient(135deg, #18261e 0%, #141c24 100%);
+      --gold: #dfba55;
+      --gold-light: #fef08a;
+      --text: #f8fafc;
+      --text-sub: #cbd5e1;
+      --text-muted: #64748b;
+      --item-bg: #141c24;
+      --item-border: rgba(255, 255, 255, 0.06);
+      --btn-bg: rgba(255, 255, 255, 0.04);
+      --btn-border: rgba(223, 186, 85, 0.25);
+      --btn-hover-bg: linear-gradient(135deg, rgba(223, 186, 85, 0.16) 0%, rgba(16, 185, 129, 0.16) 100%);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'SF Pro Text', 'Apple SD Gothic Neo', Roboto, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(20, 55, 38, 0.4) 0%, transparent 65%),
+        radial-gradient(ellipse at 80% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text);
+      padding: 24px 14px 80px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      padding: 32px 20px 26px;
+      margin-bottom: 24px;
+      background: linear-gradient(180deg, rgba(19, 30, 24, 0.85) 0%, rgba(13, 19, 26, 0.85) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(223, 186, 85, 0.25);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      color: var(--gold);
+      background: rgba(223, 186, 85, 0.1);
+      border: 1px solid rgba(223, 186, 85, 0.35);
+      padding: 5px 14px;
+      border-radius: 30px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.6px;
+      background: linear-gradient(180deg, #ffffff 40%, #e2e8f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+      font-weight: 400;
+    }
+    .stats-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 8px 22px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .stats-bar b {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .toolbar {
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .search-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .search-input {
+      width: 100%;
+      padding: 15px 18px 15px 48px;
+      background: rgba(18, 25, 34, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: #fff;
+      font-size: 15.5px;
+      outline: none;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .search-input::placeholder {
+      color: #64748b;
+    }
+    .search-input:focus {
+      border-color: var(--gold);
+      background: rgba(22, 32, 44, 0.95);
+      box-shadow: 0 0 0 3px rgba(223, 186, 85, 0.18), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .search-icon {
+      position: absolute;
+      left: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 17px;
+      opacity: 0.6;
+    }
+    .toggle-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 6px;
+    }
+    .hint-text {
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .toggle-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 6px 13px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .toggle-btn:hover {
+      color: #fff;
+      background: rgba(223, 186, 85, 0.15);
+      border-color: var(--gold);
+    }
+
+    .region-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    details.region-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+      transition: all 0.25s ease;
+    }
+    details.region-card[open] {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(223, 186, 85, 0.2);
+    }
+    details.region-card summary.region-header {
+      padding: 18px 20px;
+      background: var(--header-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      outline: none;
+      transition: background 0.2s;
+    }
+    details.region-card summary.region-header::-webkit-details-marker {
+      display: none;
+    }
+    details.region-card summary.region-header:hover {
+      background: var(--header-hover);
+    }
+    .region-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .region-icon {
+      font-size: 19px;
+    }
+    .region-name {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.3px;
+    }
+    .region-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      background: rgba(223, 186, 85, 0.1);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(223, 186, 85, 0.28);
+    }
+    .arrow-icon {
+      font-size: 13px;
+      color: #64748b;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+    }
+    details.region-card[open] .arrow-icon {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+
+    .courses-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px 16px 18px;
+      background: rgba(10, 14, 19, 0.96);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .course-item {
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .course-item:hover {
+      border-color: rgba(223, 186, 85, 0.35);
+      background: #18222c;
+      transform: translateY(-1px);
+    }
+    .course-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .course-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.2px;
+    }
+    .course-name::before {
+      content: '⛳';
+      font-size: 13px;
+    }
+    .yt-more-link {
+      font-size: 11.5px;
+      color: #94a3b8;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s;
+    }
+    .yt-more-link:hover {
+      color: var(--gold-light);
+      background: rgba(223, 186, 85, 0.15);
+      border-color: var(--gold);
+    }
+
+    .video-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .vid-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--btn-bg);
+      color: #f1f5f9;
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--btn-border);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .vid-btn:hover {
+      background: var(--btn-hover-bg);
+      color: #ffffff;
+      border-color: var(--gold);
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 14px rgba(223, 186, 85, 0.25);
+    }
+    .play-symbol {
+      color: var(--gold);
+      font-size: 11px;
+    }
+
+    .empty-result {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+      font-size: 14.5px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 12.5px;
+      color: #64748b;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="badge">YouTube MapGuider Interactive Guide</div>
+      <h1>⛳ 맵가이더 골프장 코스 공략</h1>
+      <p class="subtitle">지역을 탭하면 해당 지역의 골프장 목록이 바로 펼쳐집니다</p>
+      <div class="stats-bar">
+        <span>등록 골프장 <b>124</b>곳</span>
+        <span style="opacity: 0.3;">|</span>
+        <span>공략 영상 <b>197</b>편</span>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchField" class="search-input" placeholder="골프장 이름(블루원, 수원, 베르힐...) 검색...">
+      </div>
+      <div class="toggle-bar">
+        <span class="hint-text">👇 원하는 지역을 탭해 보세요</span>
+        <div class="toggle-btns">
+          <button class="toggle-btn" id="btnExpandAll">모두 펼치기</button>
+          <button class="toggle-btn" id="btnCollapseAll">모두 접기</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="region-list" id="regionList">
+      <details class="region-card" open data-region="gwanggyo">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">⭐️</span>
+            <span class="region-name">광교 생활권 (용인 · 수원 · 화성)</span>
+            <span class="region-badge">12곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="골프존카운티-한림용인">
+            <div class="course-item-header">
+              <span class="course-name">골프존카운티-한림용인</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+골프존카운티-한림용인" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=lfqj91w7PfU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>사파이어코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=yhuXppLyRl0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>다이아코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="남수원 체력단련장gc">
+            <div class="course-item-header">
+              <span class="course-name">남수원 체력단련장GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+남수원+체력단련장GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=OHxwNeIr-W8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>백두코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="링크나인 gc">
+            <div class="course-item-header">
+              <span class="course-name">링크나인 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+링크나인+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=WImvLgBtpnM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="블루원 용인 cc">
+            <div class="course-item-header">
+              <span class="course-name">블루원 용인 cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+블루원+용인+cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=oCH5fd2oPBg" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>EAST(동)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="블루원용인 cc">
+            <div class="course-item-header">
+              <span class="course-name">블루원용인 cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+블루원용인+cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=EYrIpDWXEAY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>MIDDLE(중앙)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="수원cc">
+            <div class="course-item-header">
+              <span class="course-name">수원cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+수원cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=8K40soAnd8Q" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>NEW(뉴) IN코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=SN0z-OyT5KE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OLD(올드) OUT코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=NXQ1dklwp_k" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>NEW(뉴) OUT코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=hvybgmRchfI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OLD(올드) IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="신안 cc">
+            <div class="course-item-header">
+              <span class="course-name">신안 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+신안+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=2pxg53tnCms" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>토마토코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="양지파인 cc">
+            <div class="course-item-header">
+              <span class="course-name">양지파인 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+양지파인+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=3irsDYOc12k" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>남코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=HC5swsdLLlI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>서코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="용인cc">
+            <div class="course-item-header">
+              <span class="course-name">용인cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+용인cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=LovnJUz43F8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>석천코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="용인경찰체력단련장cc">
+            <div class="course-item-header">
+              <span class="course-name">용인경찰체력단련장CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+용인경찰체력단련장CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=wprMWd1H4JU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="플라자용인cc">
+            <div class="course-item-header">
+              <span class="course-name">플라자용인cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+플라자용인cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=O0VZPimIunI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>타이거 OUT 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=WJ1UUsqOg1w" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>타이거 IN 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=l5ftel6GGbw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>라이온 IN 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=t5HXAblj-RA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>라이온 OUT 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="해내다 cc">
+            <div class="course-item-header">
+              <span class="course-name">해내다 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+해내다+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=dUF1mlQ7G08" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=xR0Kg6ODjLA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>스카이 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="gyeonggi_south">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">📍</span>
+            <span class="region-name">경기 남부 (이천 · 여주 · 안성 · 양평)</span>
+            <span class="region-badge">21곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="360도">
+            <div class="course-item-header">
+              <span class="course-name">360도</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+360도" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=YlZGxP0zvCA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>인 코스. 1~9홀. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=zGc_FeJxnZ4" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>아웃 코스. 1~9홀 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="골프클럽q cc">
+            <div class="course-item-header">
+              <span class="course-name">골프클럽Q CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+골프클럽Q+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=i8ZC5Zfrw24" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>팜파스코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=Br7iXqV-GN0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="더크로스비 gc">
+            <div class="course-item-header">
+              <span class="course-name">더크로스비 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+더크로스비+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=xcu6N-0IMUA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>아리아코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="동여주체력단련장">
+            <div class="course-item-header">
+              <span class="course-name">동여주체력단련장</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+동여주체력단련장" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=ofe4OdRp5Uk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>CC 마운틴코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=1q6ZGhdFXbo" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>CC 레이크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="루트52 cc">
+            <div class="course-item-header">
+              <span class="course-name">루트52 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+루트52+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=27OzM5kmtSs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>A코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=Xhoa5i4wgZU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>B코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="마이다스레이크 이천 cc">
+            <div class="course-item-header">
+              <span class="course-name">마이다스레이크 이천 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+마이다스레이크+이천+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=0bdVNHN93j4" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>올림푸스코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=kWMQNQ1p8rY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마이다스코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=uHpe98eIJmY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>타이탄코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="세라지오 gc">
+            <div class="course-item-header">
+              <span class="course-name">세라지오 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+세라지오+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=fNQ68WqtZAM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>세라코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=uFweOb_PmQY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>지오코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="소피아그린 cc">
+            <div class="course-item-header">
+              <span class="course-name">소피아그린 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+소피아그린+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=xTQ3MUGl6aY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>여강코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="스카이밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">스카이밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+스카이밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=TZtlSFRfhAs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=RRCZ28japDM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="신라 cc">
+            <div class="course-item-header">
+              <span class="course-name">신라 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+신라+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=jZTs3lsb4QU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>서코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=MYicbLmJh_o" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>남코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=03Npw3GyziI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>동코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="아리지 cc">
+            <div class="course-item-header">
+              <span class="course-name">아리지 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+아리지+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Llw9EZrl4Po" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>달님코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="안성cc">
+            <div class="course-item-header">
+              <span class="course-name">안성CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+안성CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=f0UBOWcdX_Y" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=osJmSxpOp3Y" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="여주cc">
+            <div class="course-item-header">
+              <span class="course-name">여주cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+여주cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=kUhlM8R8iNM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>챌린지코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=UUo47rAssXk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>드림코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=k-LcQg84ajE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>에이스코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="여주썬밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">여주썬밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+여주썬밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=n5Jk2_TvLuI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>썬코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="윈체스트 gc">
+            <div class="course-item-header">
+              <span class="course-name">윈체스트 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+윈체스트+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=-12CXvetvAM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>로맨틱코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="이글몬트 cc">
+            <div class="course-item-header">
+              <span class="course-name">이글몬트 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+이글몬트+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=SUW0NWkJwcs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>이글코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=58c4CuDc1Rk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>몬트코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=8LbcMxzg1XY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>히든코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="이천 실크밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">이천 실크밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+이천+실크밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=nU_LSCtGO58" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=zZUBzL2QFQ8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=UcuZHwDRlxc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>실크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="일죽 썬밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">일죽 썬밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+일죽+썬밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=ZqnTBhBEg78" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>썬코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="페럼클럽">
+            <div class="course-item-header">
+              <span class="course-name">페럼클럽</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+페럼클럽" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=g9Jt3v2CNcQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>CC 서코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=yvFXLxgheFY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>CC 동코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="포웰cc">
+            <div class="course-item-header">
+              <span class="course-name">포웰CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+포웰CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=J4GGtBTuvE8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>김해 스카이코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="포웰cc안성">
+            <div class="course-item-header">
+              <span class="course-name">포웰CC안성</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+포웰CC안성" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=sBOJoahdqSQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>버치힐코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=vpOm5yQgpxY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>오크힐코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="gyeonggi_north">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">📍</span>
+            <span class="region-name">경기 북부 · 서부 (포천 · 고양 · 파주 · 시흥 등)</span>
+            <span class="region-badge">12곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="락가든cc">
+            <div class="course-item-header">
+              <span class="course-name">락가든CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+락가든CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=9JfrJqtQfKo" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>가든 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="마이다스밸리 청평 cc">
+            <div class="course-item-header">
+              <span class="course-name">마이다스밸리 청평 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+마이다스밸리+청평+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=1ay-zleeCLY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="몽베르 cc">
+            <div class="course-item-header">
+              <span class="course-name">몽베르 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+몽베르+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=OdI2tA2rH0k" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>브렝땅코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="아도니스 cc">
+            <div class="course-item-header">
+              <span class="course-name">아도니스 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+아도니스+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=StK4Z7PXjWw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>동 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=EyocfL13Qig" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>서 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=Vkgf9KPf9vs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>중 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="아세코밸리">
+            <div class="course-item-header">
+              <span class="course-name">아세코밸리</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+아세코밸리" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=ugR_tx8CBmc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="일동레이크cc">
+            <div class="course-item-header">
+              <span class="course-name">일동레이크CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+일동레이크CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Go6qvS3h6Io" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="참밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">참밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+참밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=VxL7RA-zZSk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="파주 제이퍼블릭 cc">
+            <div class="course-item-header">
+              <span class="course-name">파주 제이퍼블릭 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+파주+제이퍼블릭+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=53lr44O9xAY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>6홀코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="포레스트힐 cc">
+            <div class="course-item-header">
+              <span class="course-name">포레스트힐 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+포레스트힐+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=h8k-r_1Av-8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>락(ROCK) 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=JZeR9wxasQo" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="푸른솔gc">
+            <div class="course-item-header">
+              <span class="course-name">푸른솔GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+푸른솔GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=fAKrWYZk4gY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포천 마운틴코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=DnZATWYdjyM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>장성 레이크코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=LREFl21UtPw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포천 레이크코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=FojRGOqBysU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포천 밸리코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=lIAoMTOgdiw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>장성 힐코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=B97PdBV3z7w" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>장성 마운틴코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="한탄강 cc">
+            <div class="course-item-header">
+              <span class="course-name">한탄강 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+한탄강+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=TGC9LL_ZXWU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="힐마루cc포천">
+            <div class="course-item-header">
+              <span class="course-name">힐마루CC포천</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+힐마루CC포천" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=T75cSsgCiBw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>시그니처A 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=xDslz1ikvOI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>네스트 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=DVR6Aa_YxCE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>브리즈 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=zSKSYtQ2u7A" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>시그니처B 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="gangwon">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">🌲</span>
+            <span class="region-name">강원권 (춘천 · 홍천 · 원주 · 설악 · 평창 등)</span>
+            <span class="region-badge">12곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="라데나 cc">
+            <div class="course-item-header">
+              <span class="course-name">라데나 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+라데나+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=e0oxrfRDPZ0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=z1Krw8uSyVg" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>가든코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="로드힐스 gc">
+            <div class="course-item-header">
+              <span class="course-name">로드힐스 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+로드힐스+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=VFEmif-0zc4" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>로드코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=RvJpVqBMFFs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="벨라스톤cc">
+            <div class="course-item-header">
+              <span class="course-name">벨라스톤CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+벨라스톤CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=g6ISmabWOUA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>스톤코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="비콘힐스 cc">
+            <div class="course-item-header">
+              <span class="course-name">비콘힐스 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+비콘힐스+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=FgkSBpCaM1s" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>하늘코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="샌드파인 cc">
+            <div class="course-item-header">
+              <span class="course-name">샌드파인 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+샌드파인+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=S8qA-erUtQA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=Nn3ZXUpX8h0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="샤인데일 cc">
+            <div class="course-item-header">
+              <span class="course-name">샤인데일 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+샤인데일+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=L8Zn_SREK8Q" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>샤인코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=t_-y_wK3EMQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>데일코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="소노펠리체 비발디파크 마운틴 cc">
+            <div class="course-item-header">
+              <span class="course-name">소노펠리체 비발디파크 마운틴 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+소노펠리체+비발디파크+마운틴+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=KJeKYwD6dW0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="알펜시아700 gc">
+            <div class="course-item-header">
+              <span class="course-name">알펜시아700 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+알펜시아700+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=TO2F_HpO3IU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>알프스코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=lDkzzvRXChs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>아시아코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="알펜시아cc">
+            <div class="course-item-header">
+              <span class="course-name">알펜시아CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+알펜시아CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=2nuHhzZnIKs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포레스트코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="월송리 cc">
+            <div class="course-item-header">
+              <span class="course-name">월송리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+월송리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=U20-HU9oBaE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="웰리힐리 cc">
+            <div class="course-item-header">
+              <span class="course-name">웰리힐리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+웰리힐리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=HAf5yWPAb1Y" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>북 OUT 코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="하이원 cc">
+            <div class="course-item-header">
+              <span class="course-name">하이원 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+하이원+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=7y9VqyY7Ut8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=GzkySjV3k4A" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="chungcheong">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">⛳️</span>
+            <span class="region-name">충청 / 세종권 (천안 · 세종 · 충주 · 제천 등)</span>
+            <span class="region-badge">9곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="감곡cc">
+            <div class="course-item-header">
+              <span class="course-name">감곡cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+감곡cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=9yBlOsoyn8o" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>GLEN(글렌) 코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="골프존카운티-천안">
+            <div class="course-item-header">
+              <span class="course-name">골프존카운티-천안</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+골프존카운티-천안" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=jwWWlpa-coU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN(인)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="대영힐스 cc">
+            <div class="course-item-header">
+              <span class="course-name">대영힐스 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+대영힐스+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=o0zjBO0hR44" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>청 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=F2RYQboUaZc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>력 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="레이캐슬cc">
+            <div class="course-item-header">
+              <span class="course-name">레이캐슬cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+레이캐슬cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=mY8US6LQiLI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=mG7wV1Hzy1o" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>세종 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="세종에머슨 cc">
+            <div class="course-item-header">
+              <span class="course-name">세종에머슨 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+세종에머슨+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Ek-xFm499Wo" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=j3TF8dazdS0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=X56mtp_RdtU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="세종필드 gc">
+            <div class="course-item-header">
+              <span class="course-name">세종필드 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+세종필드+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=8Jiqh4unFY0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>행복코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=bYDwlUp6WbM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>세종코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="유성 cc">
+            <div class="course-item-header">
+              <span class="course-name">유성 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+유성+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=wUMKTt5tbyY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>아웃(OUT)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="천안상록cc">
+            <div class="course-item-header">
+              <span class="course-name">천안상록CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+천안상록CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=9rsqJc-PME8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>동 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="힐데스하임cc">
+            <div class="course-item-header">
+              <span class="course-name">힐데스하임CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+힐데스하임CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=lG6hWgOfqHA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=K4vxlx1-gxs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=LwO7VldeNbI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="gyeongsang">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">🌊</span>
+            <span class="region-name">경상 / 부산권 (부산 · 양산 · 대구 · 의성 등)</span>
+            <span class="region-badge">12곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="구미cc">
+            <div class="course-item-header">
+              <span class="course-name">구미CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+구미CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=fFXHat_fCOA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>거북 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="남안동 cc">
+            <div class="course-item-header">
+              <span class="course-name">남안동 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+남안동+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Zjr5DqzpMas" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=41gqbZMj6lc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="드비치 gc">
+            <div class="course-item-header">
+              <span class="course-name">드비치 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+드비치+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=HlwfD1dIjnE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="드비치cc">
+            <div class="course-item-header">
+              <span class="course-name">드비치CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+드비치CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=gdLGaZ87XOg" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=GUzHqav_Ngk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="베이사이드cc">
+            <div class="course-item-header">
+              <span class="course-name">베이사이드CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+베이사이드CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=7OyTP0uoCCE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>파크 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="부산 cc">
+            <div class="course-item-header">
+              <span class="course-name">부산 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+부산+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=mK8egjCCqVw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="안동레이크gc">
+            <div class="course-item-header">
+              <span class="course-name">안동레이크GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+안동레이크GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=vNaQwFp1HNA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=4O4Nahbz9qw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="양산cc">
+            <div class="course-item-header">
+              <span class="course-name">양산cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+양산cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=B7zrJm3Ugrc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>가온코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="울진마린 cc">
+            <div class="course-item-header">
+              <span class="course-name">울진마린 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+울진마린+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=ZFGie5thG-g" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마린 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="칠곡아이위시cc">
+            <div class="course-item-header">
+              <span class="course-name">칠곡아이위시cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+칠곡아이위시cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=1HEF7dq2O04" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>리버 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="통도파인이스트 cc">
+            <div class="course-item-header">
+              <span class="course-name">통도파인이스트 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+통도파인이스트+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=55j-ucKCGCA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>남 IN코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=q4aNaOrKiR0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>북 IN코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="포도cc">
+            <div class="course-item-header">
+              <span class="course-name">포도CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+포도CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=gPUJcgKqtFU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>샤인 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=Vttp3XqFAcw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포도 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="jeolla">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">🌾</span>
+            <span class="region-name">전라권 (무안 · 나주 · 화순 · 익산 등)</span>
+            <span class="region-badge">5곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="로제비앙 gc">
+            <div class="course-item-header">
+              <span class="course-name">로제비앙 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+로제비앙+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=ARQeJ_zketA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>비앙코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=PDhW3Yl62wg" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>로제코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="빛고을 cc">
+            <div class="course-item-header">
+              <span class="course-name">빛고을 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+빛고을+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=aW1oyLBo9tE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="파인비치 cc">
+            <div class="course-item-header">
+              <span class="course-name">파인비치 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+파인비치+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=cJDjzquQLl8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="함평천지 cc">
+            <div class="course-item-header">
+              <span class="course-name">함평천지 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+함평천지+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=cl1bKUvMu8w" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="해피니스cc">
+            <div class="course-item-header">
+              <span class="course-name">해피니스CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+해피니스CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=kkeP8d3VTT8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>하트 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="jeju">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">🍊</span>
+            <span class="region-name">제주권 (제주시 · 서귀포)</span>
+            <span class="region-badge">5곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="그린필드 gc">
+            <div class="course-item-header">
+              <span class="course-name">그린필드 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+그린필드+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=JnztJeSc4V0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="블랙스톤 제주 cc">
+            <div class="course-item-header">
+              <span class="course-name">블랙스톤 제주 cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+블랙스톤+제주+cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=nxayE78ZYFg" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>동(EAST)코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=XFm9Lfza32I" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>북(NORTH)코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=ZGINMbeEFTY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>남(SOUTH)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="아덴힐 cc">
+            <div class="course-item-header">
+              <span class="course-name">아덴힐 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+아덴힐+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=HK8RYoblpaQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>새별코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=x5zT2vHOq6E" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>왕이메 코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="우리들cc">
+            <div class="course-item-header">
+              <span class="course-name">우리들CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+우리들CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Oc7lkVR7WwA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>North(북)코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=RcQKICbZEik" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>South(남)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="한라산 cc">
+            <div class="course-item-header">
+              <span class="course-name">한라산 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+한라산+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=wyxJ0S2EcYM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=LZsw623oIjE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>오션 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="region-card"  data-region="etc">
+        <summary class="region-header">
+          <div class="region-title-wrap">
+            <span class="region-icon">⛳️</span>
+            <span class="region-name">기타 지역</span>
+            <span class="region-badge">36곳</span>
+          </div>
+          <span class="arrow-icon">▼</span>
+        </summary>
+        <div class="courses-container">
+          <div class="course-item" data-cname="그랜드 cc">
+            <div class="course-item-header">
+              <span class="course-name">그랜드 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+그랜드+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=OTOZFbkXXQc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>남코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="나주 cc">
+            <div class="course-item-header">
+              <span class="course-name">나주 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+나주+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=4BIAqUVacbY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="내장산 cc">
+            <div class="course-item-header">
+              <span class="course-name">내장산 cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+내장산+cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=TDkQEKwJBe8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>홍단풍코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=VhrCbwJR9Fg" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>청단풍코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="더">
+            <div class="course-item-header">
+              <span class="course-name">더</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+더" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=DkSEJ3ENZXA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>시에나 CC(구.제주cc) 서코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=Gr8UvCtxZzQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>시에나 CC(구.제주cc) 동코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="동촌 gc">
+            <div class="course-item-header">
+              <span class="course-name">동촌 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+동촌+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=kslZyqxgYXk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>동코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=_9FE9kR2i_o" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>서코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="라헨느 cc">
+            <div class="course-item-header">
+              <span class="course-name">라헨느 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+라헨느+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=CsHrxp_FIPM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="롯데스카이힐">
+            <div class="course-item-header">
+              <span class="course-name">롯데스카이힐</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+롯데스카이힐" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=MAshcXE-c2s" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>제주 CC힐코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="롯데스카이힐 제주 cc">
+            <div class="course-item-header">
+              <span class="course-name">롯데스카이힐 제주 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+롯데스카이힐+제주+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=k5LvVMgIPKw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>스카이코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=yRe8an46lS8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포레스트코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="리더스 cc">
+            <div class="course-item-header">
+              <span class="course-name">리더스 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+리더스+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=sxOlbtI_H_8" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="문경 cc">
+            <div class="course-item-header">
+              <span class="course-name">문경 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+문경+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=l8-rXJNdM-4" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>문희코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="버치힐 gc">
+            <div class="course-item-header">
+              <span class="course-name">버치힐 GC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+버치힐+GC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=SYMbB9iJ644" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>버치코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=1o1tDfDqH5Q" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="보성 cc">
+            <div class="course-item-header">
+              <span class="course-name">보성 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+보성+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=99Yy_H0qaRs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="빅토리아 cc">
+            <div class="course-item-header">
+              <span class="course-name">빅토리아 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+빅토리아+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=1KikP4ZALxU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="서산수 cc">
+            <div class="course-item-header">
+              <span class="course-name">서산수 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+서산수+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=-oQ2E4q2_4k" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>산수코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=yYg_Z_8Qzwc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>서산코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="선리치 cc">
+            <div class="course-item-header">
+              <span class="course-name">선리치 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+선리치+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=m5OPa8UB9Y0" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="세이지우드 홍천 cc">
+            <div class="course-item-header">
+              <span class="course-name">세이지우드 홍천 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+세이지우드+홍천+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=tPCKbVnAKdQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>드림코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="솔모로cc">
+            <div class="course-item-header">
+              <span class="course-name">솔모로CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+솔모로CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=QED6981e1QQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>파인 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="스프링데일cc">
+            <div class="course-item-header">
+              <span class="course-name">스프링데일cc</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+스프링데일cc" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=3PgVbrk4rWE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>데일(자연림) 코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="신원 cc">
+            <div class="course-item-header">
+              <span class="course-name">신원 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+신원+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=3m6gjHt3hRQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>에벤에셀코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="아리스타cc">
+            <div class="course-item-header">
+              <span class="course-name">아리스타CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+아리스타CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=ibtbarJlaNw" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=igCH-X3tgWk" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>레이크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="아크로cc">
+            <div class="course-item-header">
+              <span class="course-name">아크로CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+아크로CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=kdESziPJBOM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>스카이코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="엠스클럽">
+            <div class="course-item-header">
+              <span class="course-name">엠스클럽</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+엠스클럽" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=hwk-GzSB7Ks" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>의성 CC 마스터 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="오크밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">오크밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+오크밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=r31WbyU-x4w" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>파인코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="우정힐스 cc">
+            <div class="course-item-header">
+              <span class="course-name">우정힐스 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+우정힐스+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=63_qbr9zGYI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>IN코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="정산 cc">
+            <div class="course-item-header">
+              <span class="course-name">정산 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+정산+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=7LndoeNe80s" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>해우(SUN)코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="중문 cc">
+            <div class="course-item-header">
+              <span class="course-name">중문 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+중문+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Dko-yM5kexs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>해안코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="진양밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">진양밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+진양밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=4aRV1fpCGWI" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="타미우스 cc">
+            <div class="course-item-header">
+              <span class="course-name">타미우스 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+타미우스+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=H3ExYkbcojU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>마운틴코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=OQOnhru2pkQ" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>우드코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="태릉 체력단련장">
+            <div class="course-item-header">
+              <span class="course-name">태릉 체력단련장</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+태릉+체력단련장" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=prSy5KImYnU" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>CC 을지코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="테디밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">테디밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+테디밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Ttg9otGdp0M" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=ZjlWV_ITHHY" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>테디코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="파가니카 cc">
+            <div class="course-item-header">
+              <span class="course-name">파가니카 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+파가니카+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=T18R8_aiTSs" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>힐코스. 코스</span>
+              </a>
+              <a href="https://www.youtube.com/watch?v=KEnoYAxm_IA" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>포레스트코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="파인밸리 cc">
+            <div class="course-item-header">
+              <span class="course-name">파인밸리 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+파인밸리+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=Z2duAKzgC50" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>밸리코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="플라밍고 cc">
+            <div class="course-item-header">
+              <span class="course-name">플라밍고 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+플라밍고+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=iNo1CzpbIRc" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>파크코스. 코스</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="플라자cc제주">
+            <div class="course-item-header">
+              <span class="course-name">플라자CC제주</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+플라자CC제주" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=J_AWnxm4qgM" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="한미르대덕 cc">
+            <div class="course-item-header">
+              <span class="course-name">한미르대덕 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+한미르대덕+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=lmQmujmJDPE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT</span>
+              </a>
+            </div>
+          </div>
+          <div class="course-item" data-cname="해라 cc">
+            <div class="course-item-header">
+              <span class="course-name">해라 CC</span>
+              <a href="https://www.youtube.com/results?search_query=맵가이더+해라+CC" target="_blank" class="yt-more-link">유튜브 검색 ↗</a>
+            </div>
+            <div class="video-btns">
+              <a href="https://www.youtube.com/watch?v=WA62xt9ISjE" target="_blank" class="vid-btn">
+                <span class="play-symbol">▶</span>
+                <span>OUT 코스</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div id="emptyNotice" class="empty-result">
+      🔍 검색 결과에 일치하는 골프장이 없습니다.
+    </div>
+
+    <footer>
+      <p>조현진 원장님의 즐거운 골프 라이프를 응원합니다 🏌️‍♂️</p>
+      <p style="font-size: 11px;">출처: 유튜브 'MapGuider I 맵가이더' · 제작: 비서 사만다</p>
+    </footer>
+  </div>
+
+  <script>
+    // Progressive enhancement: Expand / Collapse All
+    try {
+      const btnExpand = document.getElementById('btnExpandAll');
+      const btnCollapse = document.getElementById('btnCollapseAll');
+      if (btnExpand) {
+        btnExpand.addEventListener('click', () => {
+          document.querySelectorAll('details.region-card').forEach(d => d.open = true);
+        });
+      }
+      if (btnCollapse) {
+        btnCollapse.addEventListener('click', () => {
+          document.querySelectorAll('details.region-card').forEach(d => d.open = false);
+        });
+      }
+
+      // Real-time Search
+      const searchField = document.getElementById('searchField');
+      const detailsList = document.querySelectorAll('details.region-card');
+      const emptyNotice = document.getElementById('emptyNotice');
+
+      if (searchField) {
+        searchField.addEventListener('input', () => {
+          const q = searchField.value.toLowerCase().trim();
+          let totalVisible = 0;
+
+          detailsList.forEach(det => {
+            let hasMatch = false;
+            const items = det.querySelectorAll('.course-item');
+
+            items.forEach(item => {
+              const name = item.getAttribute('data-cname');
+              if (!q || name.includes(q)) {
+                item.style.display = 'flex';
+                hasMatch = true;
+                totalVisible++;
+              } else {
+                item.style.display = 'none';
+              }
+            });
+
+            if (hasMatch) {
+              det.style.display = 'block';
+              if (q) det.open = true;
+            } else {
+              det.style.display = 'none';
+            }
+          });
+
+          if (emptyNotice) {
+            emptyNotice.style.display = (totalVisible === 0) ? 'block' : 'none';
+          }
+        });
+      }
+    } catch (e) {
+      console.log('Script execution note:', e);
+    }
+  </script>
+</body>
+</html>
